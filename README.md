@@ -65,13 +65,16 @@ into the task version
 Usage: notebook.py [OPTIONS] [PATHS]...
 
 Options:
-  -r, --recurse           Whether to recursively go through specified folders
-                          [default: False]
+  -r, --recurse           Whether to recursively go through folders  [default:
+                          False]
 
   -f, --force             Whether to overwrite an already existing file
                           [default: False]
 
   -q, --quiet             Disable output during conversion  [default: False]
+  -p, --pattern TEXT      The pattern to search for in folders  [default:
+                          *.ipynb]
+
   --solution-suffix TEXT  The file suffix to be used for the generated
                           solution file  [default: solution]
 
