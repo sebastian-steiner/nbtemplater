@@ -56,7 +56,7 @@ version of this notebook
 ### Task
 ```markdown
 # This is some basic content
-this optional section is going to be copied
+this **optional** section is going to be copied
 into the task version
 ```
 
