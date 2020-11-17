@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/notebook-splitter.iml" filepath="$PROJECT_DIR$/.idea/notebook-splitter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/notebook.py.iml" filepath="$PROJECT_DIR$/.idea/notebook.py.iml" />
     </modules>
   </component>
 </project>
