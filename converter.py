@@ -3,15 +3,17 @@ import os
 from line_status import LineStatus
 import copy
 import colorama
+import fnmatch
 
 NOTEBOOK_ENDING = '.ipynb'
 
 
 class NotebookConverter:
-    def __init__(self, recurse, force, quiet, solution_suffix, task_suffix, start_solution, else_task, end_if):
+    def __init__(self, recurse, force, quiet, pattern, solution_suffix, task_suffix, start_solution, else_task, end_if):
         self.recurse = recurse
         self.force = force
         self.quiet = quiet
+        self.pattern = pattern
         self.solution_suffix = solution_suffix
         self.task_suffix = task_suffix
         self.start_solution = start_solution
@@ -30,14 +32,12 @@ class NotebookConverter:
     def __convert_folder(self, path):
         self.log('Converting directory: ' + colorama.Fore.GREEN + path + colorama.Style.RESET_ALL)
         if not self.recurse:
-            for file in os.listdir(path):
-                if file.endswith(NOTEBOOK_ENDING):
-                    self.__convert_file(os.path.join(path, file))
+            for file in fnmatch.filter(os.listdir(path), self.pattern):
+                self.__convert_file(os.path.join(path, file))
         else:
             for root, dirs, files in os.walk(path):
-                for file in files:
-                    if file.endswith(NOTEBOOK_ENDING):
-                        self.__convert_file(os.path.join(root, file))
+                for file in fnmatch.filter(files, self.pattern):
+                    self.__convert_file(os.path.join(root, file))
 
     def __convert_file(self, filename):
         self.log('Converting file: ' + colorama.Fore.GREEN + filename + colorama.Style.RESET_ALL)
@@ -119,10 +119,10 @@ class NotebookConverter:
                 self.log('\tCould not write to file: ' + colorama.Fore.RED + filename + colorama.Style.RESET_ALL)
 
     def __solution_filename(self, filename):
-        return os.path.splitext(filename)[0] + '_' + self.solution_suffix + '.ipynb'
+        return os.path.splitext(filename)[0] + '_' + self.solution_suffix + NOTEBOOK_ENDING
 
     def __task_filename(self, filename):
-        return os.path.splitext(filename)[0] + '_' + self.task_suffix + '.ipynb'
+        return os.path.splitext(filename)[0] + '_' + self.task_suffix + NOTEBOOK_ENDING
 
     def print_statistics(self):
         if not self.quiet:
