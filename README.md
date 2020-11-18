@@ -1,22 +1,22 @@
-# notebook.py
+# nbtemplater
 A utility to convert a template [Jupyter](https://jupyter.org/) notebook into separate
 solution and task versions based on simple directives.
 
 ```bash
 # this converts template.ipynb to template_solution.ipynb and template_task.ipynb
-python notebook.py template.ipynb
+python nbtemplater.py template.ipynb
 ```
 
-In addition to being able to convert a single file, `notebook.py` can also be
+In addition to being able to convert a single file, `nbtemplater.py` can also be
 used to (recursively) convert all notebook files in a given directory like:
 
 ```bash
 # this converts all .ipynb files in notebook-folders/
-python notebook.py notebook-folders/
+python nbtemplater.py notebook-folders/
 
 # this recursively converts all .ipynb files in notebook-folders/
 # so e.g. notebook-folders/bar/template.ipynb
-python notebook.py -r notebook-folders/
+python nbtemplater.py -r notebook-folders/
 ```
 
 ## Installation
@@ -62,7 +62,7 @@ into the task version
 
 ## Help text
 ```
-Usage: notebook.py [OPTIONS] [PATHS]...
+Usage: nbtemplater.py [OPTIONS] [PATHS]...
 
 Options:
   -r, --recurse           Whether to recursively go through folders  [default:
