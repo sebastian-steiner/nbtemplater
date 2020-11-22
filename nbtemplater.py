@@ -35,6 +35,11 @@ def run_cmd(recurse, force, quiet, pattern, solution_suffix, task_suffix, start_
                                        start_solution,
                                        else_task,
                                        end_if)
+    if not paths:
+        print("Expecting at least one file or path specified:")
+        with click.Context(run_cmd) as ctx:
+            click.echo(run_cmd.get_help(ctx))
+        exit(1)
     for path in paths:
         conv.convert(path)
     conv.print_statistics()
