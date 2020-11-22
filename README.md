@@ -4,7 +4,7 @@ solution and task versions based on simple directives.
 
 ```bash
 # this converts template.ipynb to template_solution.ipynb and template_task.ipynb
-python nbtemplater.py template.ipynb
+nbtemplater template.ipynb
 ```
 
 In addition to being able to convert a single file, `nbtemplater.py` can also be
@@ -12,21 +12,25 @@ used to (recursively) convert all notebook files in a given directory like:
 
 ```bash
 # this converts all .ipynb files in notebook-folders/
-python nbtemplater.py notebook-folders/
+nbtemplater notebook-folders/
 
 # this recursively converts all .ipynb files in notebook-folders/
 # so e.g. notebook-folders/bar/template.ipynb
-python nbtemplater.py -r notebook-folders/
+nbtemplater -r notebook-folders/
 ```
 
 ## Installation
-For easy installation, we provide a `requirements.txt` file in
-which all necessary dependencies are specified. This can be used
-like follows:
-
+For easy installation, you can install `nbtemplater` directly
+[here from PyPI](https://pypi.org/project/nbtemplater). So you can
+install it using:
 ```bash
-pip install -r requirements.txt
+pip install nbtemplater
 ```
+
+### Manual installation
+If you prefer not to install from `pip` you can get the source code at
+[the GitHub repository](https://github.com/sebastian-steiner/nbtemplater), where
+you can also find a `requirements.txt` file, listing all dependencies.
 
 ## Sample conversion
 If the following text is included in any part or cell of the template notebook, it is
@@ -62,7 +66,12 @@ into the task version
 
 ## Help text
 ```
-Usage: nbtemplater.py [OPTIONS] [PATHS]...
+Usage: nbtemplater [OPTIONS] [PATHS]...
+
+  Convert PATHS.
+
+  PATHS is a list of directories or notebook files to convert to solution
+  and task files.
 
 Options:
   -r, --recurse           Whether to recursively go through folders  [default:
