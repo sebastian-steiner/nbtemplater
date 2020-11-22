@@ -1,6 +1,6 @@
 import json
 import os
-from line_status import LineStatus
+from .line_status import LineStatus
 import copy
 import colorama
 import fnmatch
@@ -25,23 +25,22 @@ class NotebookConverter:
 
     def convert(self, path):
         if os.path.isdir(path):
-            self.__convert_folder(path)
+            self.convert_folder(path)
         else:
-            self.__convert_file(path)
+            self.convert_file(path)
 
-    def __convert_folder(self, path):
+    def convert_folder(self, path):
         self.log('Converting directory: ' + colorama.Fore.GREEN + path + colorama.Style.RESET_ALL)
         if not self.recurse:
             for file in fnmatch.filter(os.listdir(path), self.pattern):
-                self.__convert_file(os.path.join(path, file))
+                self.convert_file(os.path.join(path, file))
         else:
             for root, dirs, files in os.walk(path):
                 for file in fnmatch.filter(files, self.pattern):
-                    self.__convert_file(os.path.join(root, file))
+                    self.convert_file(os.path.join(root, file))
 
-    def __convert_file(self, filename):
+    def convert_file(self, filename):
         self.log('Converting file: ' + colorama.Fore.GREEN + filename + colorama.Style.RESET_ALL)
-
         # get json from file
         try:
             with open(filename, 'r') as file:
@@ -50,7 +49,15 @@ class NotebookConverter:
             self.failed_files.add(filename)
             self.log('\tCould not open file: ' + colorama.Fore.RED + filename + colorama.Style.RESET_ALL)
             return
-        data_json = json.loads(data)
+        has_converted_part, task_json, solution_json = self.convert_json(json.loads(data))
+
+        if has_converted_part:
+            self.write_json(task_json, self.__task_filename(filename))
+            self.write_json(solution_json, self.__solution_filename(filename))
+        else:
+            self.log('\tNo directives found, not converting')
+
+    def convert_json(self, data_json):
         cells = data_json['cells']
 
         has_converted_part = False
@@ -97,13 +104,9 @@ class NotebookConverter:
         solution_json = copy.deepcopy(data_json)
         solution_json['cells'] = solution_cells
 
-        if has_converted_part:
-            self.__write_json(task_json, self.__task_filename(filename))
-            self.__write_json(solution_json, self.__solution_filename(filename))
-        else:
-            self.log('\tNo directives found, not converting')
+        return has_converted_part, task_json, solution_json
 
-    def __write_json(self, json_data, filename):
+    def write_json(self, json_data, filename):
         self.file_cnt += 1
         if os.path.exists(filename) and not self.force:
             self.log('\tCould not write to file', filename, ' (file exists)')

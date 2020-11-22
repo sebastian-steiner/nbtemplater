@@ -1,5 +1,5 @@
 import click
-import converter
+from .functions import NotebookConverter
 
 # show the command help on both short and long version
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
@@ -26,15 +26,19 @@ def click_option(*args, **kwargs):
 @click_option('--end-if', default='%%FI%%', help='The end of a solution/task if block')
 @click.argument('paths', nargs=-1, type=click.Path(exists=True))
 def run_cmd(recurse, force, quiet, pattern, solution_suffix, task_suffix, start_solution, else_task, end_if, paths):
-    conv = converter.NotebookConverter(recurse,
-                                       force,
-                                       quiet,
-                                       pattern,
-                                       solution_suffix,
-                                       task_suffix,
-                                       start_solution,
-                                       else_task,
-                                       end_if)
+    """Convert PATHS.
+
+    PATHS is a list of directories or notebook files to convert to solution and task files.
+    """
+    conv = NotebookConverter(recurse,
+                             force,
+                             quiet,
+                             pattern,
+                             solution_suffix,
+                             task_suffix,
+                             start_solution,
+                             else_task,
+                             end_if)
     if not paths:
         print("Expecting at least one file or path specified:")
         with click.Context(run_cmd) as ctx:
