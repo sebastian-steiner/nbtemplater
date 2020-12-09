@@ -23,7 +23,7 @@ def click_option(*args, **kwargs):
               help='The file suffix to be used for the generated task file')
 @click_option('--start-solution', default='%%IF_SOL%%', help='The start of a solution block')
 @click_option('--else-task', default='%%ELSE%%', help='The start of the optional task block')
-@click_option('--end-if', default='%%FI%%', help='The end of a solution/task if block')
+@click_option('--end-if', default='%%END%%', help='The end of a solution/task if block')
 @click.argument('paths', nargs=-1, type=click.Path(exists=True))
 def run_cmd(recurse, force, quiet, pattern, solution_suffix, task_suffix, start_solution, else_task, end_if, paths):
     """Convert PATHS.
