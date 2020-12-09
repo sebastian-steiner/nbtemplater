@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='nbtemplater',
-    version='0.1.1',
+    version='0.1.2',
     author='Sebastian Steiner',
     author_email='sebastian.steiner@tuta.io',
     description='A tool to split a template Jupyter notebook into a solution and a task version.',
