@@ -95,7 +95,7 @@ Options:
                           %%ELSE%%]
 
   --end-if TEXT           The end of a solution/task if block  [default:
-                          %%FI%%]
+                          %%END%%]
 
   -h, --help              Show this message and exit.
 ```
